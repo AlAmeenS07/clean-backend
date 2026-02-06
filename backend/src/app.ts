@@ -4,6 +4,7 @@ import { connectDB } from "./config/db"
 import authRoutes from "./routes/authRoutes"
 import vehicleRoutes from "./routes/vehicleRoutes"
 import cookieParser from "cookie-parser"
+import { startRentalExpiryJob } from "./Jobs/rentalExpiryJob"
 
 const app = express()
 
@@ -11,6 +12,8 @@ app.use(express.json())
 app.use(cookieParser())
 
 connectDB()
+
+startRentalExpiryJob()
 
 app.get("/" , (req , res)=>{
     res.send("Hello !")

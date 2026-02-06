@@ -56,5 +56,8 @@ export class VehicleRepository implements IVehicleRepository{
         })
     }
 
+    async updateAvailability(vehicleId: string, isAvailable: boolean): Promise<void> {
+        await vehicleModel.findByIdAndUpdate(vehicleId , {isAvailable})
+    }
 
 }

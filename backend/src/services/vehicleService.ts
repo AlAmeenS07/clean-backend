@@ -15,4 +15,5 @@ export class VehicleService {
     async getAvailableVehiclesService() : Promise<VehicleEntiry[]>{
         return this.vehicleRepo.findAvailables()
     }
+
 }
