@@ -50,7 +50,7 @@ export class AuthController {
 
             let { user , token } = await this.authService.loginService(email , password);
 
-            res.cookie("token" , {
+            res.cookie("token" , token , {
                 httpOnly : true,
                 secure : false,
                 sameSite : "strict",

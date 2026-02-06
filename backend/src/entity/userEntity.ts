@@ -8,8 +8,4 @@ export class UserEntity{
     ){
 
     }
-
-    changePassword(newPassword : string){
-        this.password = newPassword
-    }
 }
