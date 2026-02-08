@@ -14,12 +14,4 @@ export class VehicleEntiry{
         public ownerId : string,
         public isAvailable : boolean
     ){}
-
-    markAsAvailable(){
-        this.isAvailable = true
-    }
-
-    markAsRented(){
-        this.isAvailable = false
-    }
 }

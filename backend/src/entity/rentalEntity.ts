@@ -11,8 +11,4 @@ export class RentalEntity{
     ){
 
     }
-
-    markReturned(){
-        this.isReturned = true
-    }
 }

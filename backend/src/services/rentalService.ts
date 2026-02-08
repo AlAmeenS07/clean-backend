@@ -26,7 +26,6 @@ export class RentalService{
         }
 
         await this.vehicleRepository.updateAvailability(vehicleId , false)
-        vehicle.markAsRented()
 
         const rental = new RentalEntity(
             null ,
