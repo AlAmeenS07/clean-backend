@@ -6,7 +6,7 @@ import { Status } from "../utils/enums";
 
 export class RentalController{
     constructor(
-        private rentalService : RentalService
+        private _rentalService : RentalService
     ){}
 
     rentVehicle =  async(req : Request , res : Response) => {
@@ -15,7 +15,7 @@ export class RentalController{
             const vehicleId = req.params?.id
             const userId = (req as any).userId
 
-            const rental = await this.rentalService.rentVehicleService(String(vehicleId) , userId)
+            const rental = await this._rentalService.rentVehicleService(String(vehicleId) , userId)
 
             res.status(Status.SUCCESS).json({
                 success : 200 ,

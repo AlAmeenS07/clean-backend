@@ -5,13 +5,13 @@ import { VehicleRepository } from "../repository/vehicleRepository";
 
 export class RentalService{
     constructor(
-        private vehicleRepository : VehicleRepository,
-        private rentalRepository : RentalRepository
+        private _vehicleRepository : VehicleRepository,
+        private _rentalRepository : RentalRepository
     ){}
 
     async rentVehicleService(vehicleId : string , renterId : string){
 
-        const vehicle = await this.vehicleRepository.findById(vehicleId)
+        const vehicle = await this._vehicleRepository.findById(vehicleId)
 
         if(vehicle?.ownerId === renterId){
             throw new Error("Owner can't rent itself !");
@@ -25,7 +25,7 @@ export class RentalService{
             throw new Error("Vehicle already rented !");
         }
 
-        await this.vehicleRepository.updateAvailability(vehicleId , false)
+        await this._vehicleRepository.updateAvailability(vehicleId , false)
 
         const rental = new RentalEntity(
             null ,
@@ -35,7 +35,7 @@ export class RentalService{
             1
         )
 
-        return this.rentalRepository.create(rental)
+        return this._rentalRepository.create(rental)
 
     }
 }

@@ -6,7 +6,7 @@ import { Status } from "../utils/enums";
 
 
 export class VehicleController {
-    constructor(private vehcileService: VehicleService) { }
+    constructor(private _vehcileService: VehicleService) { }
 
     addVehicle = async (req: Request, res: Response) => {
         try {
@@ -27,7 +27,7 @@ export class VehicleController {
                 throw new Error("Price must be greater than 0 !");
             }
 
-            const vehicle = await this.vehcileService.addVehicleService(title, type, Number(pricePerDay), ownerId)
+            const vehicle = await this._vehcileService.addVehicleService(title, type, Number(pricePerDay), ownerId)
 
             res.status(Status.CREATED).json({
                 success: true,
@@ -51,7 +51,7 @@ export class VehicleController {
     getAllVehicles = async (req: Request, res: Response) => {
         try {
 
-            const vehicles = await this.vehcileService.getAvailableVehiclesService()
+            const vehicles = await this._vehcileService.getAvailableVehiclesService()
 
             res.status(Status.SUCCESS).json({
                 success: true,

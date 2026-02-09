@@ -5,11 +5,11 @@ import jwt from "jsonwebtoken"
 
 
 export class AuthService{
-    constructor(private userRepository : IUserRepository){}
+    constructor(private _userRepository : IUserRepository){}
 
     registerService = async(username : string , email : string , password : string) : Promise<UserEntity> => {
 
-        const existingUser = await this.userRepository.findByEmail(email)
+        const existingUser = await this._userRepository.findByEmail(email)
 
         if(existingUser){
             throw new Error("user already exist !");
@@ -24,12 +24,12 @@ export class AuthService{
             hashPassword
         )
 
-        return await this.userRepository.create(user)
+        return await this._userRepository.create(user)
     }
 
     loginService = async (email : string , password : string) => {
 
-        const user = await this.userRepository.findByEmail(email)
+        const user = await this._userRepository.findByEmail(email)
 
         if(!user){
             throw new Error("User not found in this email !");

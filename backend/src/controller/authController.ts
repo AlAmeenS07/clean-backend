@@ -6,7 +6,7 @@ import { Status } from "../utils/enums";
 dotenv.config()
 
 export class AuthController {
-    constructor(private authService : AuthService){}
+    constructor(private _authService : AuthService){}
 
     register = async(req : Request , res : Response) => {
         try {
@@ -25,7 +25,7 @@ export class AuthController {
                 throw new Error("Password must be 6 letters !");
             }
 
-            let user = await this.authService.registerService(username , email , password);
+            let user = await this._authService.registerService(username , email , password);
 
             res.status(Status.CREATED).json({
                 success : true ,
@@ -52,7 +52,7 @@ export class AuthController {
                 throw new Error("credentials must be filled !");
             }
 
-            let { user , token } = await this.authService.loginService(email , password);
+            let { user , token } = await this._authService.loginService(email , password);
 
             res.cookie("token" , token , {
                 httpOnly : true,
