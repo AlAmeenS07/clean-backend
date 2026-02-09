@@ -1,5 +1,6 @@
 import { NextFunction , Request , Response } from "express";
 import jwt from "jsonwebtoken";
+import { Status } from "../utils/enums";
 
 type JwtPayload = {
     userId : string,
@@ -22,6 +23,6 @@ export const authMiddleware = async(req : Request, res : Response , next : NextF
         next()
         
     } catch (error) {
-        res.status(401).json({success : false , message : "Invalid token !"})
+        res.status(Status.UNAUTHORIZED).json({success : false , message : "Invalid token !"})
     }
 }

@@ -1,6 +1,8 @@
 import { VehicleEntiry, VehicleTypes } from "../entity/vehicleEntity";
 import { VehicleService } from "../services/vehicleService";
 import { Request, Response } from "express"
+import { VEHICLE_ADDED_SUCCESSFULLY, VEHICLE_FETCHED_SUCCESSFULLY } from "../utils/constants";
+import { Status } from "../utils/enums";
 
 
 export class VehicleController {
@@ -27,9 +29,9 @@ export class VehicleController {
 
             const vehicle = await this.vehcileService.addVehicleService(title, type, Number(pricePerDay), ownerId)
 
-            res.status(201).json({
+            res.status(Status.CREATED).json({
                 success: true,
-                message: "vehicle added successfully",
+                message: VEHICLE_ADDED_SUCCESSFULLY,
                 vehicle: {
                     id: vehicle.id,
                     title: vehicle.title,
@@ -42,7 +44,7 @@ export class VehicleController {
 
 
         } catch (error: any) {
-            res.status(404).json({ success: false, message: error.message })
+            res.status(Status.NOT_FOUND).json({ success: false, message: error.message })
         }
     }
 
@@ -51,9 +53,9 @@ export class VehicleController {
 
             const vehicles = await this.vehcileService.getAvailableVehiclesService()
 
-            res.status(200).json({
+            res.status(Status.SUCCESS).json({
                 success: true,
-                messages: "vehicles fetched successfully",
+                messages: VEHICLE_FETCHED_SUCCESSFULLY,
                 vehicles: vehicles.map((vehicle) => {
                     return {
                         id: vehicle.id,
@@ -67,7 +69,7 @@ export class VehicleController {
             })
 
         } catch (error : any) {
-            res.status(500).json({success : false , message : error.message})
+            res.status(Status.SERVER_ERROR).json({success : false , message : error.message})
         }
     }
 }

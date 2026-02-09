@@ -1,5 +1,9 @@
 import { AuthService } from "../services/authService";
 import { Request , Response } from "express";
+import dotenv from "dotenv"
+import { LOGIN_SUCCESSFULLY, LOGOUT_SUCCESSFULLY, USER_REGISTERED_SUCCESSFULLY } from "../utils/constants";
+import { Status } from "../utils/enums";
+dotenv.config()
 
 export class AuthController {
     constructor(private authService : AuthService){}
@@ -23,9 +27,9 @@ export class AuthController {
 
             let user = await this.authService.registerService(username , email , password);
 
-            res.status(201).json({
+            res.status(Status.CREATED).json({
                 success : true ,
-                message : "user resgistered successfully",
+                message : USER_REGISTERED_SUCCESSFULLY,
                 user : {
                     id : user.id,
                     email : user.email
@@ -34,7 +38,7 @@ export class AuthController {
 
             
         } catch (error : any) {
-            res.status(400).json({success : false , message : error.message})
+            res.status(Status.BAD_REQUEST).json({success : false , message : error.message})
         }
     }
 
@@ -54,12 +58,12 @@ export class AuthController {
                 httpOnly : true,
                 secure : false,
                 sameSite : "strict",
-                maxAge : 24 * 60 * 60 * 1000
+                maxAge : Number(process.env.COOKIE_MAX_AGE) || 24 * 60 * 60 * 1000
             })
 
-            res.status(200).json({
+            res.status(Status.SUCCESS).json({
                 success : true,
-                message : "login successfully",
+                message : LOGIN_SUCCESSFULLY,
                 user : {
                     id : user.id,
                     email : user.email
@@ -67,7 +71,7 @@ export class AuthController {
             })
             
         } catch (error : any) {
-            res.status(400).json({success : false , message : error.message})
+            res.status(Status.BAD_REQUEST).json({success : false , message : error.message})
         }
     }
 
@@ -80,13 +84,13 @@ export class AuthController {
                 sameSite : "strict"
             })
 
-            res.status(200).json({
+            res.status(Status.SUCCESS).json({
                 success : true,
-                message : "logout success"
+                message : LOGOUT_SUCCESSFULLY
             })
             
         } catch (error : any) {
-            res.status(500).json({success : false , message : error.message})
+            res.status(Status.SERVER_ERROR).json({success : false , message : error.message})
         }
     }
 

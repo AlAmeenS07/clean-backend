@@ -41,7 +41,7 @@ export class AuthService{
             throw new Error("Invalid Password !");
         }
 
-        let token = jwt.sign({userId : user.id , email : user.email} , "secret" , {expiresIn  : "1d"})
+        let token = jwt.sign({userId : user.id , email : user.email} , process.env.JWT_SECRET || "secret" , {expiresIn  : "1d"})
 
         return {user , token}
     }

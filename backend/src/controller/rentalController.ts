@@ -1,5 +1,7 @@
 import { RentalService } from "../services/rentalService";
 import {Request , Response} from "express"
+import { VEHICLE_RENTED_SUCCESSFULLY } from "../utils/constants";
+import { Status } from "../utils/enums";
 
 
 export class RentalController{
@@ -15,14 +17,14 @@ export class RentalController{
 
             const rental = await this.rentalService.rentVehicleService(String(vehicleId) , userId)
 
-            res.status(200).json({
+            res.status(Status.SUCCESS).json({
                 success : 200 ,
-                message : "vehicle rented successfully",
+                message : VEHICLE_RENTED_SUCCESSFULLY,
                 rental
             })
             
         } catch (error : any) {
-            res.status(400).json({success : false , message : error.message})
+            res.status(Status.BAD_REQUEST).json({success : false , message : error.message})
         }
     }
 }
