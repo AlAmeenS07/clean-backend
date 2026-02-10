@@ -1,7 +1,7 @@
 import { VehicleEntiry, VehicleTypes } from "../entity/vehicleEntity";
 import { VehicleService } from "../services/vehicleService";
 import { Request, Response } from "express"
-import { VEHICLE_ADDED_SUCCESSFULLY, VEHICLE_FETCHED_SUCCESSFULLY } from "../utils/constants";
+import { ALL_FIELDS_REQUIRED, INVALID_VEHICLE_TYPE, PRICE_GREATER_THAN_0, VEHICLE_ADDED_SUCCESSFULLY, VEHICLE_FETCHED_SUCCESSFULLY } from "../utils/constants";
 import { Status } from "../utils/enums";
 
 
@@ -16,15 +16,15 @@ export class VehicleController {
             let ownerId: string = (req as any).userId
 
             if (!title || !type || !pricePerDay) {
-                throw new Error("All fields is required !");
+                throw new Error(ALL_FIELDS_REQUIRED);
             }
 
             if (!Object.values(VehicleTypes).includes(type)) {
-                throw new Error("Invalid vehicle type !");
+                throw new Error(INVALID_VEHICLE_TYPE);
             }
 
             if (Number(pricePerDay) <= 0) {
-                throw new Error("Price must be greater than 0 !");
+                throw new Error(PRICE_GREATER_THAN_0);
             }
 
             const vehicle = await this._vehcileService.addVehicleService(title, type, Number(pricePerDay), ownerId)

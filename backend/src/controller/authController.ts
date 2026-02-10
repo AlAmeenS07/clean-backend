@@ -1,7 +1,7 @@
 import { AuthService } from "../services/authService";
 import { Request , Response } from "express";
 import dotenv from "dotenv"
-import { LOGIN_SUCCESSFULLY, LOGOUT_SUCCESSFULLY, USER_REGISTERED_SUCCESSFULLY } from "../utils/constants";
+import { ALL_FIELDS_REQUIRED, ENTER_VALID_EMAIL, LOGIN_SUCCESSFULLY, LOGOUT_SUCCESSFULLY, PASSWORD_MUST_6_LETTER, USER_REGISTERED_SUCCESSFULLY } from "../utils/constants";
 import { Status } from "../utils/enums";
 dotenv.config()
 
@@ -14,15 +14,15 @@ export class AuthController {
             const {username , email , password} = req.body
 
             if(!username || !email || !password){
-                throw new Error("All fields required !");
+                throw new Error(ALL_FIELDS_REQUIRED);
             }
 
             if(!email.includes("@")){
-                throw new Error("Enter valid email !");
+                throw new Error(ENTER_VALID_EMAIL);
             }
 
             if(password.length < 6){
-                throw new Error("Password must be 6 letters !");
+                throw new Error(PASSWORD_MUST_6_LETTER);
             }
 
             let user = await this._authService.registerService(username , email , password);
